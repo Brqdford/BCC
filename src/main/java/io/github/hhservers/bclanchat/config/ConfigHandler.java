@@ -19,7 +19,6 @@ public class ConfigHandler {
     private BClanChat plugin = BClanChat.getInstance();
     private File confFile =new File(plugin.getConfigDir(), "BClanChat.conf");
     private ConfigurationLoader<CommentedConfigurationNode> configLoad;
-    @Getter
     private MainPluginConfig pluginConf;
 
     public ConfigHandler(BClanChat plugin) {

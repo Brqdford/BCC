@@ -80,7 +80,7 @@ public class BClanChat {
 
     @Listener
     public void onServerStart(GameStartedServerEvent event) {
-        clanList = configHandler.getPluginConf().getClans().getClanList();
+        clanList = configHandler.getPluginConf().getClanList();
     }
 
     @Listener

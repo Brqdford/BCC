@@ -81,7 +81,7 @@ public class Util {
     public void saveClansConfig() throws IOException, ObjectMappingException {
         //BClanChat.getInstance().getLogger().info(BClanChat.clanList.get(0).getClanID());
         MainPluginConfig conf = BClanChat.getConfigHandler().getPluginConf();
-        conf.getClans().setClanList(BClanChat.clanList);
+        conf.setClanList(BClanChat.clanList);
         BClanChat.getConfigHandler().saveConfig(conf);
     }
 }

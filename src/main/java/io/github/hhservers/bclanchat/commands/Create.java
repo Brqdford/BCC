@@ -31,9 +31,9 @@ public class Create implements CommandExecutor {
                 clan.setClanID(clanID);
                 MainPluginConfig conf = BClanChat.getMainPluginConfig();
 
-                List<Clan> tmpList = conf.getClans().getClanList();
+                List<Clan> tmpList = conf.getClanList();
                 tmpList.add(clan);
-                conf.getClans().setClanList(tmpList);
+                conf.setClanList(tmpList);
 
                 BClanChat.getConfigHandler().saveConfig(conf);
             }

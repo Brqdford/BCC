@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.UUID;
 
 @ConfigSerializable
-@Data
 public class Clan {
 
     private List<UUID> playerList = new ArrayList<>();
@@ -16,6 +15,30 @@ public class Clan {
     private UUID ownerUUID = UUID.randomUUID();
 
     private String clanID = "placeholder";
+
+    public List<UUID> getPlayerList() {
+        return playerList;
+    }
+
+    public UUID getOwnerUUID() {
+        return ownerUUID;
+    }
+
+    public String getClanID() {
+        return clanID;
+    }
+
+    public void setPlayerList(List<UUID> playerList) {
+        this.playerList = playerList;
+    }
+
+    public void setOwnerUUID(UUID ownerUUID) {
+        this.ownerUUID = ownerUUID;
+    }
+
+    public void setClanID(String clanID) {
+        this.clanID = clanID;
+    }
 
     public Boolean addPlayer(UUID uuid){
         if(playerList.contains(uuid)){

@@ -8,17 +8,27 @@ import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@ConfigSerializable @Data
+@ConfigSerializable
 public class MainPluginConfig {
     @Setting(value = "saveTimer")
     private int saveTimer = 10;
 
-    @Setting(value = "Clans")
-    private MainPluginConfig.ClanList clans = new ClanList();
+    @Setting(value = "clanList")
+    private List<Clan> clanList = new ArrayList<>();
 
-    @ConfigSerializable @Data
-    public static class ClanList {
-        @Setting(value = "clanList")
-        private List<Clan> clanList;
+    public int getSaveTimer() {
+        return saveTimer;
+    }
+
+    public List<Clan> getClanList() {
+        return clanList;
+    }
+
+    public void setSaveTimer(int saveTimer) {
+        this.saveTimer = saveTimer;
+    }
+
+    public void setClanList(List<Clan> clanList) {
+        this.clanList = clanList;
     }
 }
