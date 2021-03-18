@@ -13,10 +13,14 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'org.spongepowered:spongeapi:7.2.0-SNAPSHOT'
-    annotationProcessor 'org.spongepowered:spongeapi:7.2.0-SNAPSHOT'
+    compileOnly 'org.spongepowered:spongeapi:7.3.0'
+    annotationProcessor 'org.spongepowered:spongeapi:7.3.0'
     compileOnly 'org.projectlombok:lombok:1.18.12'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
+}
+
+jar {
+    baseName('BClanChat')
 }
 
 sponge.plugin.id = pluginId

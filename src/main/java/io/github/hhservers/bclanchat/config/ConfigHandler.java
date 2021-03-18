@@ -48,4 +48,5 @@ public class ConfigHandler {
             config.setValue(TypeToken.of(MainPluginConfig.class), newConfig);
             configLoad.save(config);
     }
+
 }

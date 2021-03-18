@@ -8,7 +8,7 @@ import org.spongepowered.api.command.spec.CommandExecutor;
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.text.Text;
 
-public class Child implements CommandExecutor {
+public class Add implements CommandExecutor {
     @Override
     public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
         //do things
@@ -17,9 +17,9 @@ public class Child implements CommandExecutor {
 
     public static CommandSpec build(){
        return CommandSpec.builder()
-                .permission("bclanchat.user.base.child")
-                .description(Text.of("Child command of Base"))
-                .executor(new Child())
+                .permission("bclanchat.user.base.add")
+                .description(Text.of("Add player to Clan"))
+                .executor(new Add())
                 .build();
     }
 }
