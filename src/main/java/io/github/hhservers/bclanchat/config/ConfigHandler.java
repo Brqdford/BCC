@@ -1,7 +1,7 @@
-package io.github.hhservers.bstarter.config;
+package io.github.hhservers.bclanchat.config;
 
 import com.google.common.reflect.TypeToken;
-import io.github.hhservers.bstarter.BStarter;
+import io.github.hhservers.bclanchat.BClanChat;
 import lombok.Data;
 import lombok.Getter;
 import ninja.leaping.configurate.ConfigurationOptions;
@@ -16,13 +16,13 @@ import java.io.IOException;
 @Data
 public class ConfigHandler {
 
-    private  BStarter plugin = BStarter.getInstance();
-    private File confFile =new File(plugin.getConfigDir(), "BStarter.conf");
+    private BClanChat plugin = BClanChat.getInstance();
+    private File confFile =new File(plugin.getConfigDir(), "BClanChat.conf");
     private ConfigurationLoader<CommentedConfigurationNode> configLoad;
     @Getter
     private MainPluginConfig pluginConf;
 
-    public ConfigHandler(BStarter plugin) {
+    public ConfigHandler(BClanChat plugin) {
         this.plugin = plugin;
         if (!plugin.getConfigDir().exists()) {
             plugin.getConfigDir().mkdirs();
@@ -30,7 +30,6 @@ public class ConfigHandler {
     }
 
     public boolean loadConfig() throws IOException, ObjectMappingException {
-        //File file = new File(plugin.getConfigDir(), "BStarter.conf");
         if (!confFile.exists()) {
             confFile.createNewFile();
         }

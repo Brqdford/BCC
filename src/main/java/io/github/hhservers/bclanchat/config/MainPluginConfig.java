@@ -1,4 +1,4 @@
-package io.github.hhservers.bstarter.config;
+package io.github.hhservers.bclanchat.config;
 
 import lombok.Data;
 import ninja.leaping.configurate.objectmapping.Setting;

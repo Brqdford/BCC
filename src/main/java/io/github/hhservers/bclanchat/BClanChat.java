@@ -1,9 +1,9 @@
-package io.github.hhservers.bstarter;
+package io.github.hhservers.bclanchat;
 
 import com.google.inject.Inject;
-import io.github.hhservers.bstarter.commands.Base;
-import io.github.hhservers.bstarter.config.ConfigHandler;
-import io.github.hhservers.bstarter.config.MainPluginConfig;
+import io.github.hhservers.bclanchat.commands.Base;
+import io.github.hhservers.bclanchat.config.ConfigHandler;
+import io.github.hhservers.bclanchat.config.MainPluginConfig;
 import lombok.Getter;
 import ninja.leaping.configurate.objectmapping.GuiceObjectMapperFactory;
 import ninja.leaping.configurate.objectmapping.ObjectMappingException;
@@ -21,17 +21,17 @@ import java.io.File;
 import java.io.IOException;
 
 @Plugin(
-        id = "bstarter",
-        name = "BStarter",
-        description = "Starter plugin",
+        id = "bclanchat",
+        name = "BClanChat",
+        description = "ClanChat plugin",
         authors = {
                 "blvxr"
         }
 )
-public class BStarter {
+public class BClanChat {
 
     @Getter
-    private static BStarter instance;
+    private static BClanChat instance;
     @Getter
     @Inject
     private Logger logger;
@@ -43,7 +43,7 @@ public class BStarter {
 
 
     @Inject
-    public BStarter(GuiceObjectMapperFactory factory, @ConfigDir(sharedRoot = false) File configDir) {
+    public BClanChat(GuiceObjectMapperFactory factory, @ConfigDir(sharedRoot = false) File configDir) {
         this.factory=factory;
         this.configDir=configDir;
         instance=this;
