@@ -1,5 +1,6 @@
 package io.github.hhservers.bclanchat.commands.admin;
 
+import io.github.hhservers.bclanchat.BClanChat;
 import io.github.hhservers.bclanchat.commands.user.Add;
 import io.github.hhservers.bclanchat.commands.user.Delete;
 import io.github.hhservers.bclanchat.commands.user.Details;
@@ -14,7 +15,7 @@ import org.spongepowered.api.text.Text;
 public class AdminBase implements CommandExecutor {
     @Override
     public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
-        src.sendMessage(Text.of("/bca details <[clanID]>"));
+        src.sendMessage(BClanChat.getInstance().util.prefixSerializer("&bCheck &d/" + BClanChat.getMainPluginConfig().getAdminCommandPrefix() + " help&b for more commands"));
         return CommandResult.success();
     }
 
@@ -25,6 +26,7 @@ public class AdminBase implements CommandExecutor {
                 .child(AdminAdd.build(), "add")
                 .child(AdminRemove.build(), "remove")
                 .child(AdminGet.build(), "get")
+                .child(AdminHelp.build(), "help")
                 .permission("bclanchat.admin.clan")
                 .description(Text.of("Admin base command"))
                 .executor(new AdminBase())
