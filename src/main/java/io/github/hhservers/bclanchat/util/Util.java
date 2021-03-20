@@ -82,6 +82,7 @@ public class Util {
                                         if(addUserToClan(receiver, sender.getUniqueId())){
                                         BClanChat.getInstance().getRequests().get(BClanChat.getInstance().getRequests().indexOf(req)).setAcknowledged(true);
                                         rec.sendMessage(prefixSerializer("&bYou are now a member of "+send.getName()+"&b's clan"));
+                                        send.sendMessage(prefixSerializer("&d"+send.getName()+"&b has accepted your request to join the clan."));
                                         }
                                     } else {rec.sendMessage(prefixSerializer("&bYou have already responded to this request"));}
                                 } else {

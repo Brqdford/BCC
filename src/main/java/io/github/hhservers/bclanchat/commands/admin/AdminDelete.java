@@ -30,7 +30,7 @@ public class AdminDelete implements CommandExecutor {
                 .arguments(GenericArguments.string(Text.of("clanID")))
                 .permission("bclanchat.admin.clan.delete")
                 .description(Text.of("Delete Clan"))
-                .executor(new Remove())
+                .executor(new AdminDelete())
                 .build();
     }
 }

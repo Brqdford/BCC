@@ -33,6 +33,7 @@ public class Base implements CommandExecutor {
                 .child(Details.build(), "details")
                 .child(Add.build(), "add")
                 .child(Remove.build(), "remove")
+                .child(Leave.build(), "leave")
                 .permission("bclanchat.user.clan")
                 .description(Text.of("Base command"))
                 .executor(new Base())

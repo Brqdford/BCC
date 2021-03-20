@@ -29,6 +29,7 @@ public class Create implements CommandExecutor {
                         clan.setOwnerUUID(p.getUniqueId());
                         clan.addPlayer(p.getUniqueId());
                         util.addClanToList(clan);
+                        p.sendMessage(util.prefixSerializer("&bYour clan &d"+clanID+" &bhas been created!"));
                     } else { p.sendMessage(util.prefixSerializer("&bThe &l&8{&r&a" + clanID +"&l&8}&r&b Clan ID already exists! Please pick a different Clan ID.")); }
                 } else {
                     p.sendMessage(Text.of("You are already a member of a clan!"));
