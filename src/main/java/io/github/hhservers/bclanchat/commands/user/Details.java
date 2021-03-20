@@ -21,8 +21,10 @@ public class Details implements CommandExecutor {
         if(src instanceof Player){
             Player p = (Player)src;
             if(args.<String>getOne(Text.of("clanID")).isPresent()) {
-                String clanID = args.<String>getOne(Text.of("clanID")).get();
-                util.showClanDetails(p, clanID);
+                if(p.hasPermission("bclanchat.user.clan.details.other")) {
+                    String clanID = args.<String>getOne(Text.of("clanID")).get();
+                    util.showClanDetails(p, clanID);
+                }
             } else {util.showClanDetails(p);}
         }
         return CommandResult.success();

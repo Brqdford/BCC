@@ -163,7 +163,7 @@ public class Util {
             Clan clan = getClanByOwner(clanID).get();
             User owner = getUser(clan.getOwnerUUID()).get();
             List<User> members = new ArrayList<>();
-            clanText.add(textSerializer("\n&aID: &b" + clan.getClanID() + "\n"));
+            clanText.add(textSerializer("&aID: &b" + clan.getClanID()));
             clanText.add(textSerializer("&bClan owner: &a" + owner.getName()));
             for (UUID uuid : clan.getPlayerList()) {
                 members.add(getUser(uuid).get());
@@ -178,19 +178,19 @@ public class Util {
 
     public void showClanDetails(Player p) {
         List<Text> clanText = new ArrayList<>();
-        if (getPlayerClan(p.getUniqueId()).isPresent()) {
-            Clan clan = getPlayerClan(p.getUniqueId()).get();
+        if (getClanByOwner(p.getUniqueId()).isPresent()) {
+            Clan clan = getClanByOwner(p.getUniqueId()).get();
             User owner = getUser(clan.getOwnerUUID()).get();
             List<User> members = new ArrayList<>();
+            clanText.add(textSerializer("&aID: &b" + clan.getClanID()));
             clanText.add(textSerializer("&bClan owner: &a" + owner.getName()));
             for (UUID uuid : clan.getPlayerList()) {
                 members.add(getUser(uuid).get());
             }
-            Text.Builder memberText = TextSerializers.FORMATTING_CODE.deserialize("&bMembers: &r").toBuilder();
+            clanText.add(textSerializer("&bMembers:&r "));
             for (User user : members) {
-                memberText.append(textSerializer("\n&l&6-&r&a" + user.getName()));
+                clanText.add(textSerializer("&l&6-&r&a" + user.getName()));
             }
-            clanText.add(memberText.build());
             paginationBuilder(clanText, p);
         }
     }
