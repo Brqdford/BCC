@@ -18,6 +18,8 @@ import org.spongepowered.api.text.serializer.TextSerializers;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class Util {
 
@@ -97,7 +99,7 @@ public class Util {
                                         if(addUserToClan(receiver, sender.getUniqueId())){
                                         BClanChat.getInstance().getRequests().get(BClanChat.getInstance().getRequests().indexOf(req)).setAcknowledged(true);
                                         rec.sendMessage(prefixSerializer("&bYou are now a member of "+send.getName()+"&b's clan"));
-                                        send.sendMessage(prefixSerializer("&d"+send.getName()+"&b has accepted your request to join the clan."));
+                                        send.sendMessage(prefixSerializer("&d"+rec.getName()+"&b has accepted your request to join the clan."));
                                         }
                                     } else {rec.sendMessage(prefixSerializer("&bYou have already responded to this request"));}
                                 } else {
@@ -158,11 +160,36 @@ public class Util {
         return map;
     }
 
+    public static class ClanSupplier implements Supplier<Collection<String>> {
+        @Override
+        public Collection<String> get() {
+            return new Util().clanIDs();
+        }
+    }
+
+    public Collection<String> clanIDs(){
+        Collection col = new ArrayList();
+        for(Clan clan : BClanChat.clanList){
+            col.add(clan.getClanID());
+        }
+        return col;
+    }
+
+    public Function<String, String> getClanIDFunction(){
+        Function<String, String> func = s -> s;
+        return func;
+    }
+
+    public void wtf(){
+
+    }
+
     public PaginationList allClanDetails(CommandSource src) {
         List<Text> listText = new ArrayList<>();
         Text separator = textSerializer("----------");
-        Text.Builder builder = separator.toBuilder();
+        Text.Builder builder = Text.builder();
         for (Clan clan : BClanChat.clanList) {
+            listText.add(separator);
             builder.append(textSerializer("\n&aID: &b" + clan.getClanID() + "\n"));
             builder.append(
                     textSerializer("\n&aOwner: &b" + getUser(clan.getOwnerUUID()).get().getName()))
@@ -170,7 +197,7 @@ public class Util {
             for (UUID member : clan.getPlayerList()) {
                 builder.append(textSerializer("\n&l&6-&r&b" + getUser(member).get().getName()));
             }
-            builder.append(separator);
+            listText.add(separator);
         }
         listText.add(builder.build());
         return PaginationList.builder()
