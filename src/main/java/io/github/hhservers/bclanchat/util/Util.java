@@ -180,10 +180,6 @@ public class Util {
         return func;
     }
 
-    public void wtf(){
-
-    }
-
     public PaginationList allClanDetails(CommandSource src) {
         List<Text> listText = new ArrayList<>();
         Text separator = textSerializer("----------");
