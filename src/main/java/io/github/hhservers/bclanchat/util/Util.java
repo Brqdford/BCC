@@ -168,12 +168,10 @@ public class Util {
             for (UUID uuid : clan.getPlayerList()) {
                 members.add(getUser(uuid).get());
             }
-            //Text.Builder memberText = TextSerializers.FORMATTING_CODE.deserialize("&bMembers:&r ").toBuilder();
             clanText.add(textSerializer("&bMembers:&r "));
             for (User user : members) {
                 clanText.add(textSerializer("&l&6-&r&a" + user.getName()));
             }
-            //clanText.add(memberText.build());
             paginationBuilder(clanText, src);
         }
     }
