@@ -11,7 +11,11 @@ public class Request {
         this.acknowledged=acknowledged;
     }
 
-    private final UUID id;
+    public Request(){
+
+    }
+
+    private UUID id;
     private UUID sender;
     private UUID receiver;
     private Boolean acknowledged;

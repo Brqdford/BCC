@@ -2,6 +2,7 @@ package io.github.hhservers.bclanchat.commands.user;
 
 import io.github.hhservers.bclanchat.BClanChat;
 import io.github.hhservers.bclanchat.util.Util;
+import io.github.hhservers.bclanchat.util.objects.Request;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
