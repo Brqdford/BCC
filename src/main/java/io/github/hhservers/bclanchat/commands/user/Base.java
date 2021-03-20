@@ -13,12 +13,6 @@ import org.spongepowered.api.text.Text;
 public class Base implements CommandExecutor {
     @Override
     public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
-        Util util = new Util();
-        /*src.sendMessage(Text.of("/bclans create clanID"));
-        src.sendMessage(Text.of("/bclans add Player"));
-        src.sendMessage(Text.of("/bclans remove Player"));
-        src.sendMessage(Text.of("/bclans delete clanID"));*/
-
         if(src instanceof Player){
             Player p = (Player)src;
             new Util().toggleClanChat(p);
@@ -34,6 +28,7 @@ public class Base implements CommandExecutor {
                 .child(Add.build(), "add")
                 .child(Remove.build(), "remove")
                 .child(Leave.build(), "leave")
+                .child(Help.build(), "help")
                 .permission("bclanchat.user.clan")
                 .description(Text.of("Base command"))
                 .executor(new Base())
