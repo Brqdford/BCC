@@ -10,6 +10,13 @@ import java.util.List;
 
 @ConfigSerializable
 public class MainPluginConfig {
+
+    @Setting(value = "commandPrefix")
+    private final String commandPrefix = "clan";
+
+    @Setting(value = "adminCommandPrefix")
+    private final String adminCommandPrefix = "bca";
+
     @Setting(value = "saveTimer")
     private int saveTimer = 10;
 
@@ -30,5 +37,17 @@ public class MainPluginConfig {
 
     public void setClanList(List<Clan> clanList) {
         this.clanList = clanList;
+    }
+
+    public void deleteClanFromList(Clan clan){
+        clanList.remove(clan);
+    }
+
+    public String getCommandPrefix() {
+        return commandPrefix;
+    }
+
+    public String getAdminCommandPrefix() {
+        return adminCommandPrefix;
     }
 }

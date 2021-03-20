@@ -1,6 +1,7 @@
 package io.github.hhservers.bclanchat.util.objects;
 
 import lombok.Data;
+import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 
 import java.util.ArrayList;
@@ -10,10 +11,13 @@ import java.util.UUID;
 @ConfigSerializable
 public class Clan {
 
+    @Setting("playerList")
     private List<UUID> playerList = new ArrayList<>();
 
+    @Setting("ownerUUID")
     private UUID ownerUUID = UUID.randomUUID();
 
+    @Setting("clanID")
     private String clanID = "placeholder";
 
     public List<UUID> getPlayerList() {
@@ -45,6 +49,14 @@ public class Clan {
             return false;
         }
         playerList.add(uuid);
+        return true;
+    }
+
+    public Boolean removePlayer(UUID uuid){
+        if(!playerList.contains(uuid)){
+            return false;
+        }
+        playerList.remove(uuid);
         return true;
     }
 

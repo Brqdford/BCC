@@ -1,7 +1,5 @@
-package io.github.hhservers.bclanchat.commands;
+package io.github.hhservers.bclanchat.commands.user;
 
-import io.github.hhservers.bclanchat.BClanChat;
-import io.github.hhservers.bclanchat.config.MainPluginConfig;
 import io.github.hhservers.bclanchat.util.Util;
 import io.github.hhservers.bclanchat.util.objects.Clan;
 import lombok.SneakyThrows;
@@ -15,27 +13,29 @@ import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
 
-import java.util.List;
-
 public class Create implements CommandExecutor {
     @SneakyThrows
     @Override
     public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
         if (src instanceof Player) {
             if(args.<String>getOne(Text.of("clanID")).isPresent()) {
+                Util util = new Util();
                 String clanID = args.<String>getOne(Text.of("clanID")).get();
                 Player p = (Player) src;
-
-                Clan clan = new Clan();
-                clan.setOwnerUUID(p.getUniqueId());
-                clan.setClanID(clanID);
-                MainPluginConfig conf = BClanChat.getMainPluginConfig();
-
-                List<Clan> tmpList = conf.getClanList();
-                tmpList.add(clan);
-                conf.setClanList(tmpList);
-
-                BClanChat.getConfigHandler().saveConfig(conf);
+                if(!util.isClanMember(p.getUniqueId())) {
+                    if(!util.clanIDExists(clanID)) {
+                        Clan clan = new Clan();
+                        clan.setClanID(clanID);
+                        clan.setOwnerUUID(p.getUniqueId());
+                        clan.addPlayer(p.getUniqueId());
+                        util.addClanToList(clan);
+                    } else { p.sendMessage(util.prefixSerializer("&bThe &l&8{&r&a" + clanID +"&l&8}&r&b Clan ID already exists! Please pick a different Clan ID.")); }
+                } else {
+                    p.sendMessage(Text.of("You are already a member of a clan!"));
+                }
+                /*MainPluginConfig conf = BClanChat.getMainPluginConfig();
+                conf.getClanList().add(clan);
+                BClanChat.getConfigHandler().saveConfig(conf);*/
             }
         }
         return CommandResult.success();
@@ -43,7 +43,7 @@ public class Create implements CommandExecutor {
 
     public static CommandSpec build(){
        return CommandSpec.builder()
-                .permission("bclanchat.user.base.create")
+                .permission("bclanchat.user.clan.create")
                 .arguments(GenericArguments.string(Text.of("clanID")))
                 .description(Text.of("Create Clan"))
                 .executor(new Create())
