@@ -11,10 +11,13 @@ import java.util.List;
 @ConfigSerializable
 public class MainPluginConfig {
 
-    @Setting(value = "commandPrefix")
+    @Setting(value = "chatPrefix", comment = "The prefix to look for in chat to classify whatever comes after as a clan chat message, default is \"cln!\"")
+    private String chatPrefix = "cln!";
+
+    @Setting(value = "commandPrefix", comment = "The command prefix for the base command, default is \"clan\"")
     private final String commandPrefix = "clan";
 
-    @Setting(value = "adminCommandPrefix")
+    @Setting(value = "adminCommandPrefix", comment = "The command prefix for the admin command, default is \"bca\"")
     private final String adminCommandPrefix = "bca";
 
     @Setting(value = "saveTimer")

@@ -1,5 +1,6 @@
 package io.github.hhservers.bclanchat.util;
 
+import com.google.common.collect.ImmutableMap;
 import io.github.hhservers.bclanchat.BClanChat;
 import io.github.hhservers.bclanchat.config.MainPluginConfig;
 import io.github.hhservers.bclanchat.util.objects.Clan;
@@ -147,6 +148,14 @@ public class Util {
                 .contents(text)
                 .title(TextSerializers.FORMATTING_CODE.deserialize("&l&8[&r&bBClanChat&l&8]&r"))
                 .sendTo(src);
+    }
+
+    public HashMap<String, String> genChoices(){
+        HashMap<String, String> map = new HashMap<>();
+        for(Clan clan : BClanChat.clanList){
+            map.put(clan.getClanID(), clan.getClanID());
+        }
+        return map;
     }
 
     public PaginationList allClanDetails(CommandSource src) {

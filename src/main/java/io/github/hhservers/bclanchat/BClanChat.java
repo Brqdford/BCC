@@ -82,14 +82,14 @@ public class BClanChat {
     @Listener
     public void onGameInit(GameInitializationEvent e){
         instance = this;
+        List<Clan> tmpList = configHandler.getPluginConf().getClanList();
+        clanList = tmpList;
         Sponge.getCommandManager().register(instance, Base.build(), getMainPluginConfig().getCommandPrefix());
         Sponge.getCommandManager().register(instance, AdminBase.build(), getMainPluginConfig().getAdminCommandPrefix());
     }
 
     @Listener
     public void onServerStart(GameStartedServerEvent event) {
-        List<Clan> tmpList = configHandler.getPluginConf().getClanList();
-        clanList = tmpList;
 
         Task.builder()
                 .interval(getMainPluginConfig().getSaveTimer(), TimeUnit.MINUTES)
