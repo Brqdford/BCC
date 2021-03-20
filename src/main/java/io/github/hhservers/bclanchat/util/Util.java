@@ -41,6 +41,20 @@ public class Util {
         return userStorage.get().get(uuid);
     }
 
+    public Optional<Player> getOnlinePlayer(UUID uuid){
+        Optional opt = Optional.empty();
+        if(getUser(uuid).isPresent()){
+            User u = getUser(uuid).get();
+            if(u.isOnline()){
+                if(u.getPlayer().isPresent()){
+                    opt = Optional.of(u.getPlayer().get());
+                    return opt;
+                }
+            }
+        }
+        return opt;
+    }
+
     public Boolean addUserToClan(User u, UUID owner) {
         if (getClanByOwner(owner).isPresent()) {
             return getClanByOwner(owner).get().addPlayer(u.getUniqueId());
@@ -243,6 +257,11 @@ public class Util {
 
 
     public void deleteClan(Clan clan) throws IOException, ObjectMappingException {
+        for(UUID uuid : clan.getPlayerList()){
+            if(getOnlinePlayer(uuid).isPresent()){
+                getOnlinePlayer(uuid).get().sendMessage(prefixSerializer("&bThe clan you were in (" + clan.getClanID() + ") has been deleted."));
+            }
+        }
         BClanChat.clanList.remove(clan);
         MainPluginConfig conf = BClanChat.getMainPluginConfig();
         conf.getClanList().remove(clan);
@@ -255,6 +274,11 @@ public class Util {
         while (iterator.hasNext()) {
             Clan clan = iterator.next();
             if (clan.getClanID().equals(clanID)) {
+                for(UUID uuid : clan.getPlayerList()){
+                    if(getOnlinePlayer(uuid).isPresent()){
+                        getOnlinePlayer(uuid).get().sendMessage(prefixSerializer("&bThe clan you were in (" + clanID + ") has been deleted."));
+                    }
+                }
                 BClanChat.clanList.remove(clan);
                 return true;
             }

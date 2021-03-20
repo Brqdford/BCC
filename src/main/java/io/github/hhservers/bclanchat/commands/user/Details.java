@@ -23,9 +23,15 @@ public class Details implements CommandExecutor {
             if(args.<String>getOne(Text.of("clanID")).isPresent()) {
                 if(p.hasPermission("bclanchat.user.clan.details.other")) {
                     String clanID = args.<String>getOne(Text.of("clanID")).get();
-                    util.showClanDetails(p, clanID);
+                    if(util.clanIDExists(clanID))
+                        util.showClanDetails(p, clanID);
                 }
-            } else {util.showClanDetails(p);}
+            } else {
+                if(util.getPlayerClan(p.getUniqueId()).isPresent())
+                    util.showClanDetails(p);
+                else
+                    p.sendMessage(util.prefixSerializer("&bYou need to be in a clan before you can see clan details."));
+            }
         }
         return CommandResult.success();
     }
