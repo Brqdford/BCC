@@ -1,5 +1,6 @@
 package io.github.hhservers.bclanchat.commands.user;
 
+import io.github.hhservers.bclanchat.BClanChat;
 import io.github.hhservers.bclanchat.util.Util;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
@@ -15,7 +16,7 @@ public class Base implements CommandExecutor {
     public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
         if(src instanceof Player){
             Player p = (Player)src;
-            new Util().toggleClanChat(p);
+            BClanChat.getInstance().util.toggleClanChat(p);
         }
         return CommandResult.success();
     }
