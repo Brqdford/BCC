@@ -21,8 +21,8 @@ public class Delete implements CommandExecutor {
                 Util util = BClanChat.getInstance().util;
                 if (util.getClanByOwner(p.getUniqueId()).isPresent()) {
                     util.deleteClan(util.getClanByOwner(p.getUniqueId()).get());
-                    p.sendMessage(util.prefixSerializer("&bClan deleted!"));
-                } else { p.sendMessage(util.prefixSerializer("&bYou must first own a clan before you delete it!"));}
+                    p.sendMessage(util.prefixSerializer("&bGroup deleted!"));
+                } else { p.sendMessage(util.prefixSerializer("&bYou must first own a group before you delete it!"));}
             }
         return CommandResult.success();
     }
@@ -30,7 +30,7 @@ public class Delete implements CommandExecutor {
     public static CommandSpec build(){
        return CommandSpec.builder()
                 .permission("bclanchat.user.clan.delete")
-                .description(Text.of("Delete Clan"))
+                .description(Text.of("Group Clan"))
                 .executor(new Delete())
                 .build();
     }

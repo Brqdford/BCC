@@ -27,7 +27,7 @@ public class AdminDetails implements CommandExecutor {
                 //.arguments(GenericArguments.optional(GenericArguments.choices(Text.of("clanID"), new Util().genChoices())))
                 .arguments(GenericArguments.choices(Text.of("clanID"), new Util.ClanSupplier(), new Util().getClanIDFunction()))
                 .permission("bclanchat.admin.clan.details")
-                .description(Text.of("Details from clan"))
+                .description(Text.of("Details from group"))
                 .executor(new AdminDetails())
                 .build();
     }

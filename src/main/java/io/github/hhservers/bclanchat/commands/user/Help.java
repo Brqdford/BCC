@@ -25,12 +25,13 @@ public class Help implements CommandExecutor {
             Util util = BClanChat.getInstance().util;
             List<Text> txt = new ArrayList<>();
             String prefix = BClanChat.getMainPluginConfig().getCommandPrefix();
-            txt.add(util.textSerializer("&l&6-&d/" + prefix + " create &a-&b Create a clan"));
-            txt.add(util.textSerializer("&l&6-&d/" + prefix + " details &a-&b Current clan details"));
-            txt.add(util.textSerializer("&l&6-&d/" + prefix + " add &a-&b Add user to a clan you own"));
-            txt.add(util.textSerializer("&l&6-&d/" + prefix + " remove &a-&b Remove user from a clan you own"));
-            txt.add(util.textSerializer("&l&6-&d/" + prefix + " leave &a-&b Leave your current clan"));
-            txt.add(util.textSerializer("&l&6-&d/" + prefix + " delete &a-&b Delete a clan you own"));
+            txt.add(util.textSerializer("&3/" + prefix + " &7-&b Toggle Group Chat"));
+            txt.add(util.textSerializer("&3/" + prefix + " create &7-&b Create a group"));
+            txt.add(util.textSerializer("&3/" + prefix + " details &7-&b Current group details"));
+            txt.add(util.textSerializer("&3/" + prefix + " add &7-&b Add user to a group you own"));
+            txt.add(util.textSerializer("&3/" + prefix + " remove &7-&b Remove user from a group you own"));
+            txt.add(util.textSerializer("&3/" + prefix + " leave &7-&b Leave your current group"));
+            txt.add(util.textSerializer("&3/" + prefix + " delete &7-&b Delete a group you own"));
             util.paginationBuilder(txt, src);
         }
         return CommandResult.success();
@@ -39,7 +40,7 @@ public class Help implements CommandExecutor {
     public static CommandSpec build(){
        return CommandSpec.builder()
                 .permission("bclanchat.user.clan.help")
-                .description(Text.of("Clan help"))
+                .description(Text.of("Group help"))
                 .executor(new Help())
                 .build();
     }

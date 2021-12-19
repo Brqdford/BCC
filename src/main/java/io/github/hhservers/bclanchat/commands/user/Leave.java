@@ -27,14 +27,14 @@ public class Leave implements CommandExecutor {
                 if(!clan.getOwnerUUID().equals(p.getUniqueId())) {
                     String clanID = clan.getClanID();
                     if (util.removeUserFromClan(p, clanID)) {
-                        src.sendMessage(util.prefixSerializer("&bYou have left the Clan: &d" + clanID + "&b."));
+                        src.sendMessage(util.prefixSerializer("&bYou have left the group: &3" + clanID + "&b."));
                         if (util.getUser(clan.getOwnerUUID()).isPresent()) {
                             User u = util.getUser(clan.getOwnerUUID()).get();
                             if (u.isOnline())
-                                u.getPlayer().get().sendMessage(util.prefixSerializer("&bThe player &d" + p.getName() + "&b has left your clan"));
+                                u.getPlayer().get().sendMessage(util.prefixSerializer("&bThe player &3" + p.getName() + "&b has left your group"));
                         }
                     }
-                } else src.sendMessage(util.prefixSerializer("&bYou can't leave a clan you own! Use the delete command if you'd like to disband the clan."));
+                } else src.sendMessage(util.prefixSerializer("&bYou can't leave a group you own! Use the delete command if you'd like to disband the group."));
             }
         }
         return CommandResult.success();
@@ -43,7 +43,7 @@ public class Leave implements CommandExecutor {
     public static CommandSpec build(){
        return CommandSpec.builder()
                 .permission("bclanchat.user.clan.leave")
-                .description(Text.of("Leave clan command"))
+                .description(Text.of("Leave group command"))
                 .executor(new Leave())
                 .build();
     }

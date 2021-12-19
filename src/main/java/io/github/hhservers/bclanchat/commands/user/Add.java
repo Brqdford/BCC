@@ -33,12 +33,12 @@ public class Add implements CommandExecutor {
                         Request req = new Request(UUID.randomUUID(), sender.getUniqueId(), u.getUniqueId(), false);
                         BClanChat.getInstance().getRequests().add(req);
                         util.sendClanRequest((User) src, u, req);
-                        src.sendMessage(util.prefixSerializer("&bYou have sent a Clan request to &d" + u.getName() + "&b."));
+                        src.sendMessage(util.prefixSerializer("&bYou have sent a group request to &3" + u.getName() + "&b."));
                     } else
-                        src.sendMessage(util.prefixSerializer("&bUser must be online before sending a Clan request."));
+                        src.sendMessage(util.prefixSerializer("&bUser must be online before sending a group request."));
 
                 }
-            } else sender.sendMessage(util.prefixSerializer("&bYou must be the owner of a clan to send requests!"));
+            } else sender.sendMessage(util.prefixSerializer("&bYou must be the owner of a group to send requests!"));
         }
         return CommandResult.success();
     }
@@ -47,7 +47,7 @@ public class Add implements CommandExecutor {
        return CommandSpec.builder()
                 .permission("bclanchat.user.clan.add")
                 .arguments(GenericArguments.user(Text.of("usernameToAdd")))
-                .description(Text.of("Add player to Clan"))
+                .description(Text.of("Add player to group"))
                 .executor(new Add())
                 .build();
     }

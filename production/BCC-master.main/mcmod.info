@@ -1,0 +1,16 @@
+[
+    {
+        "modid": "bclanchat",
+        "name": "BClanChat",
+        "description": "ClanChat plugin",
+        "authorList": [
+            "blvxr"
+        ],
+        "dependencies": [
+            "spongeapi@7.3.0"
+        ],
+        "requiredMods": [
+            "spongeapi@7.3.0"
+        ]
+    }
+]

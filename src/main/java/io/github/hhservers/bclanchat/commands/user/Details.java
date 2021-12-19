@@ -30,7 +30,7 @@ public class Details implements CommandExecutor {
                 if(util.getPlayerClan(p.getUniqueId()).isPresent())
                     util.showClanDetails(p);
                 else
-                    p.sendMessage(util.prefixSerializer("&bYou need to be in a clan before you can see clan details."));
+                    p.sendMessage(util.prefixSerializer("&bYou need to be in a group before you can see group details."));
             }
         }
         return CommandResult.success();
@@ -40,7 +40,7 @@ public class Details implements CommandExecutor {
        return CommandSpec.builder()
                 .arguments(GenericArguments.optional(GenericArguments.string(Text.of("clanID"))))
                 .permission("bclanchat.user.clan.details")
-                .description(Text.of("Details of clan command"))
+                .description(Text.of("Details of group command"))
                 .executor(new Details())
                 .build();
     }

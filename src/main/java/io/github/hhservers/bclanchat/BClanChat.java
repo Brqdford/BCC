@@ -15,6 +15,8 @@ import ninja.leaping.configurate.objectmapping.ObjectMappingException;
 import org.slf4j.Logger;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.config.ConfigDir;
+import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.data.manipulator.mutable.DisplayNameData;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.filter.cause.First;
 import org.spongepowered.api.event.game.GameReloadEvent;
@@ -26,6 +28,9 @@ import org.spongepowered.api.event.game.state.GameStoppingServerEvent;
 import org.spongepowered.api.event.message.MessageChannelEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.scheduler.Task;
+import org.spongepowered.api.scoreboard.Team;
+import org.spongepowered.api.scoreboard.TeamMember;
+import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.serializer.TextSerializers;
 
 import java.io.File;
@@ -95,7 +100,7 @@ public class BClanChat {
                 .interval(getMainPluginConfig().getSaveTimer(), TimeUnit.MINUTES)
                 .delay(getMainPluginConfig().getSaveTimer(), TimeUnit.MINUTES)
                 .execute(() -> {
-                    getInstance().getLogger().info("saving clans task...");
+                    getInstance().getLogger().info("saving groups task...");
                     try {
                         util.saveClansConfig();
                     } catch (IOException|ObjectMappingException ex) {
@@ -115,40 +120,67 @@ public class BClanChat {
         reloadConfig();
     }
 
+
     @Listener
-    public void onMessageChannel(MessageChannelEvent.Chat e, @First Player p){
+    public void onMessageChannel(MessageChannelEvent.Chat e, @First Player p) {
+
+        Optional<Team> team = p.getScoreboard().getMemberTeam(p.getTeamRepresentation());
         String textString = e.getRawMessage().toPlain();
-        logger.info(e.getRawMessage().toPlain());
-        logger.info("" + textString.contains("cln!"));
-        if(chatToggle.containsKey(p.getUniqueId())){
-            if(chatToggle.get(p.getUniqueId())) {
+        if (chatToggle.containsKey(p.getUniqueId())) {
+            if (chatToggle.get(p.getUniqueId())) {
                 if (util.getPlayerClan(p.getUniqueId()).isPresent()) {
                     Clan playerClan = util.getPlayerClan(p.getUniqueId()).get();
                     for (UUID uuid : playerClan.getPlayerList()) {
                         if (Sponge.getServer().getPlayer(uuid).isPresent()) {
+                            String msg = TextSerializers.FORMATTING_CODE.serialize(e.getRawMessage());
                             e.setCancelled(true);
-                            Sponge.getServer().getPlayer(uuid).get().sendMessage(TextSerializers.FORMATTING_CODE.deserialize("&l&8[&r&b" + playerClan.getClanID() + "&l&8]&r &o&7" + p.getName() + ": " + TextSerializers.FORMATTING_CODE.serialize(e.getRawMessage())));
+                            Sponge.getServer().getPlayer(uuid).get().sendMessage(TextSerializers.FORMATTING_CODE.deserialize("&8[&9" + playerClan.getClanID() + "&8]&r &f" + team.get().getPrefix().toPlain().replace("[", "§f[§3").replace("]", "§f] ") + p.getName() + ": " + msg.replace("grp!", "")));
+                            Sponge.getServer().getConsole().sendMessage(Text.of(p.getName(), ": ", msg));
                         }
                     }
                 } else {
-                    p.sendMessage(util.prefixSerializer("You cannot send clan chat messages if you are not in a clan!"));
+                    p.sendMessage(util.prefixSerializer("You cannot send group messages if you are not in a group!"));
                     e.setCancelled(true);
                 }
             }
         }
 
-        if(textString.contains("cln!")){
+        if (textString.contains("grp!")) {
             if (util.getPlayerClan(p.getUniqueId()).isPresent()) {
-                Clan playerClan = util.getPlayerClan(p.getUniqueId()).get();
-                for (UUID uuid : playerClan.getPlayerList()) {
-                    if (Sponge.getServer().getPlayer(uuid).isPresent()) {
-                        String msg = TextSerializers.FORMATTING_CODE.serialize(e.getRawMessage());
-                        e.setCancelled(true);
-                        Sponge.getServer().getPlayer(uuid).get().sendMessage(TextSerializers.FORMATTING_CODE.deserialize("&l&8[&r&b" + playerClan.getClanID() + "&l&8]&r &o&7" + p.getName() + ": " + msg.replace("cln!", "")));
+                if (chatToggle.containsKey(p.getUniqueId())) {
+                    if (chatToggle.get(p.getUniqueId())) {
+                        return;
+                    } else {
+                        Clan playerClan = util.getPlayerClan(p.getUniqueId()).get();
+                        for (UUID uuid : playerClan.getPlayerList()) {
+                            if (Sponge.getServer().getPlayer(uuid).isPresent()) {
+                                String msg = TextSerializers.FORMATTING_CODE.serialize(e.getRawMessage());
+                                e.setCancelled(true);
+                                Sponge.getServer().getPlayer(uuid).get().sendMessage(TextSerializers.FORMATTING_CODE.deserialize("&8[&9" + playerClan.getClanID() + "&8]&r &f" + team.get().getPrefix().toPlain().replace("[", "§f[§3").replace("]", "§f] ") + p.getName() + ": " + msg.replace("grp!", "")));
+                                Sponge.getServer().getConsole().sendMessage(Text.of(p.getName(), ": ", msg));
+                            }
+                        }
+                    }
+                } else {
+                    Clan playerClan = util.getPlayerClan(p.getUniqueId()).get();
+                    for (UUID uuid : playerClan.getPlayerList()) {
+                        if (Sponge.getServer().getPlayer(uuid).isPresent()) {
+                            String msg = TextSerializers.FORMATTING_CODE.serialize(e.getRawMessage());
+                            e.setCancelled(true);
+                            Sponge.getServer().getPlayer(uuid).get().sendMessage(TextSerializers.FORMATTING_CODE.deserialize("&8[&9" + playerClan.getClanID() + "&8]&r &f" + team.get().getPrefix().toPlain().replace("[", "§f[§3").replace("]", "§f] ") + p.getName() + ": " + msg.replace("grp!", "")));
+                            Sponge.getServer().getConsole().sendMessage(Text.of(p.getName(), ": ", msg));
+                        }
                     }
                 }
-            } else {
-                p.sendMessage(util.prefixSerializer("You cannot send clan chat messages if you are not in a clan!"));
+            }else if(chatToggle.containsKey(p.getUniqueId())){
+                if (chatToggle.get(p.getUniqueId())){
+                    return;
+                }else {
+                    p.sendMessage(util.prefixSerializer("You cannot send group messages if you are not in a group!"));
+                    e.setCancelled(true);
+                }
+            } else{
+                p.sendMessage(util.prefixSerializer("You cannot send group messages if you are not in a group!"));
                 e.setCancelled(true);
             }
         }

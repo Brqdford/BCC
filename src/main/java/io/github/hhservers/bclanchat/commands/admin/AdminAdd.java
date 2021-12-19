@@ -24,11 +24,11 @@ public class AdminAdd implements CommandExecutor {
                 User u = args.<User>getOne(Text.of("usernameToAdd")).get();
                 if(!util.getPlayerClan(u.getUniqueId()).isPresent()) {
                     if (util.addUserToClan(u, clanID))
-                        src.sendMessage(util.prefixSerializer("&bUser &d" + u.getName() + "&b added to the Clan &d" + clanID));
+                        src.sendMessage(util.prefixSerializer("&bUser &d" + u.getName() + "&b added to the group &d" + clanID));
                     else
-                        src.sendMessage(util.prefixSerializer("&bError occurred when trying to add User to Clan"));
+                        src.sendMessage(util.prefixSerializer("&bError occurred when trying to add User to group"));
                 } else {
-                    src.sendMessage(util.prefixSerializer("&bUser is already part of another Clan."));
+                    src.sendMessage(util.prefixSerializer("&bUser is already part of another group."));
                 }
             }
         }
@@ -40,7 +40,7 @@ public class AdminAdd implements CommandExecutor {
         return CommandSpec.builder()
                 .arguments(GenericArguments.user(Text.of("usernameToAdd")), GenericArguments.string(Text.of("clanID")))
                 .permission("bclanchat.admin.clan.add")
-                .description(Text.of("Add player to Clan"))
+                .description(Text.of("Add player to Group"))
                 .executor(new AdminAdd())
                 .build();
     }

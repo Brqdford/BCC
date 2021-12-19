@@ -22,9 +22,9 @@ public class AdminRemove implements CommandExecutor {
                 String clanID = args.<String>getOne(Text.of("clanID")).get();
                 User u = args.<User>getOne(Text.of("usernameToRemove")).get();
                 if(BClanChat.getInstance().util.removeUserFromClan(u,clanID))
-                    src.sendMessage(BClanChat.getInstance().util.prefixSerializer("&bUser &d" + u.getName() + "&b removed from the Clan &d"+clanID));
+                    src.sendMessage(BClanChat.getInstance().util.prefixSerializer("&bUser &d" + u.getName() + "&b removed from the group &d"+clanID));
                 else
-                    src.sendMessage(BClanChat.getInstance().util.prefixSerializer("&bError occurred when trying to remove User from Clan"));
+                    src.sendMessage(BClanChat.getInstance().util.prefixSerializer("&bError occurred when trying to remove User from group"));
             }
         }
         return CommandResult.success();
@@ -34,7 +34,7 @@ public class AdminRemove implements CommandExecutor {
         return CommandSpec.builder()
                 .arguments(GenericArguments.user(Text.of("usernameToRemove")), GenericArguments.string(Text.of("clanID")))
                 .permission("bclanchat.admin.clan.remove")
-                .description(Text.of("Remove player from Clan"))
+                .description(Text.of("Remove player from group"))
                 .executor(new AdminRemove())
                 .build();
     }

@@ -26,7 +26,7 @@ public class Util {
     private final BClanChat instance = BClanChat.getInstance();
 
     public Text prefixSerializer(String content) {
-        return TextSerializers.FORMATTING_CODE.deserialize("&l&8[&r&bBClanChat&l&8]&r " + content);
+        return TextSerializers.FORMATTING_CODE.deserialize("&8[&9GroupChat&8]&r " + content);
     }
 
     public Text textSerializer(String content) {
@@ -88,31 +88,31 @@ public class Util {
             Player rec = receiver.getPlayer().get();
             Player send = sender.getPlayer().get();
 
-            rec.sendMessage(prefixSerializer("&bYou have received a Clan request from &d" + sender.getName() + "&b."));
+            rec.sendMessage(prefixSerializer("&bYou have received a group request from &3" + sender.getName() + "&b."));
 
             rec.sendMessage(Text.builder()
 
-                    .append(Text.builder().append(textSerializer("&l&8[&r&aACCEPT&l&8]&r "))
+                    .append(Text.builder().append(textSerializer("&8[&r&aAccept&8]&r "))
                             .onClick(TextActions.executeCallback(commandSource -> {
                                 if (!getPlayerClan(rec.getUniqueId()).isPresent()) {
                                     if (!BClanChat.getInstance().getRequests().get(BClanChat.getInstance().getRequests().indexOf(req)).getAcknowledged()) {
                                         if(addUserToClan(receiver, sender.getUniqueId())){
                                         BClanChat.getInstance().getRequests().get(BClanChat.getInstance().getRequests().indexOf(req)).setAcknowledged(true);
-                                        rec.sendMessage(prefixSerializer("&bYou are now a member of "+send.getName()+"&b's clan"));
-                                        send.sendMessage(prefixSerializer("&d"+rec.getName()+"&b has accepted your request to join the clan."));
+                                        rec.sendMessage(prefixSerializer("&bYou are now a member of "+send.getName()+"&b's group"));
+                                        send.sendMessage(prefixSerializer("&3"+rec.getName()+"&b has accepted your request to join the group."));
                                         }
                                     } else {rec.sendMessage(prefixSerializer("&bYou have already responded to this request"));}
                                 } else {
-                                    rec.sendMessage(prefixSerializer("&bYou are already a member of a clan!"));
+                                    rec.sendMessage(prefixSerializer("&bYou are already a member of a group!"));
                                 }
                             }))
                             .build())
 
-                    .append(Text.builder().append(textSerializer("&l&8[&r&cDENY&l&8]&r"))
+                    .append(Text.builder().append(textSerializer("&8[&r&cDeny&8]&r"))
                             .onClick(TextActions.executeCallback(commandSource -> {
                                 if (!BClanChat.getInstance().getRequests().get(BClanChat.getInstance().getRequests().indexOf(req)).getAcknowledged()) {
                                     BClanChat.getInstance().getRequests().get(BClanChat.getInstance().getRequests().indexOf(req)).setAcknowledged(true);
-                                    ((Player) sender).sendMessage(prefixSerializer("&bYour request to Clan with &d" + receiver.getName() + "&b has been denied."));
+                                    ((Player) sender).sendMessage(prefixSerializer("&bYour request to group with &3" + receiver.getName() + "&b has been denied."));
                                 } else {receiver.getPlayer().get().sendMessage(prefixSerializer("&bYou have already responded to this request"));}
                             }))
                             .build())
@@ -148,7 +148,7 @@ public class Util {
         return PaginationList.builder()
                 .padding(TextSerializers.FORMATTING_CODE.deserialize("&b="))
                 .contents(text)
-                .title(TextSerializers.FORMATTING_CODE.deserialize("&l&8[&r&bBClanChat&l&8]&r"))
+                .title(TextSerializers.FORMATTING_CODE.deserialize("&8[&r&9GroupChat&8]&r"))
                 .sendTo(src);
     }
 
@@ -186,12 +186,12 @@ public class Util {
         Text.Builder builder = Text.builder();
         for (Clan clan : BClanChat.clanList) {
             listText.add(separator);
-            builder.append(textSerializer("\n&aID: &b" + clan.getClanID() + "\n"));
+            builder.append(textSerializer("\n&3ID: &b" + clan.getClanID() + "\n"));
             builder.append(
-                    textSerializer("\n&aOwner: &b" + getUser(clan.getOwnerUUID()).get().getName()))
-                    .append(textSerializer("\n&aMembers: "));
+                    textSerializer("\n&3Owner: &b" + getUser(clan.getOwnerUUID()).get().getName()))
+                    .append(textSerializer("\n&3Members: "));
             for (UUID member : clan.getPlayerList()) {
-                builder.append(textSerializer("\n&l&6-&r&b" + getUser(member).get().getName()));
+                builder.append(textSerializer("\n&7-&r&3" + getUser(member).get().getName()));
             }
             listText.add(separator);
         }
@@ -199,7 +199,7 @@ public class Util {
         return PaginationList.builder()
                 .padding(TextSerializers.FORMATTING_CODE.deserialize("&b="))
                 .contents(listText)
-                .title(TextSerializers.FORMATTING_CODE.deserialize("&l&8[&r&bBClanChat&l&8]&r"))
+                .title(TextSerializers.FORMATTING_CODE.deserialize("&8[&r&9GroupChat&8]&r"))
                 .sendTo(src);
     }
 
@@ -209,14 +209,14 @@ public class Util {
             Clan clan = getClanByOwner(clanID).get();
             User owner = getUser(clan.getOwnerUUID()).get();
             List<User> members = new ArrayList<>();
-            clanText.add(textSerializer("&aID: &b" + clan.getClanID()));
-            clanText.add(textSerializer("&bClan owner: &a" + owner.getName()));
+            clanText.add(textSerializer("&3ID: &b" + clan.getClanID()));
+            clanText.add(textSerializer("&bGroup owner: &3" + owner.getName()));
             for (UUID uuid : clan.getPlayerList()) {
                 members.add(getUser(uuid).get());
             }
             clanText.add(textSerializer("&bMembers:&r "));
             for (User user : members) {
-                clanText.add(textSerializer("&l&6-&r&a" + user.getName()));
+                clanText.add(textSerializer("&7-&r&3" + user.getName()));
             }
             paginationBuilder(clanText, src);
         }
@@ -228,14 +228,14 @@ public class Util {
             Clan clan = getClanByOwner(p.getUniqueId()).get();
             User owner = getUser(clan.getOwnerUUID()).get();
             List<User> members = new ArrayList<>();
-            clanText.add(textSerializer("&aID: &b" + clan.getClanID()));
-            clanText.add(textSerializer("&bClan owner: &a" + owner.getName()));
+            clanText.add(textSerializer("&3ID: &b" + clan.getClanID()));
+            clanText.add(textSerializer("&bGroup owner: &3" + owner.getName()));
             for (UUID uuid : clan.getPlayerList()) {
                 members.add(getUser(uuid).get());
             }
             clanText.add(textSerializer("&bMembers:&r "));
             for (User user : members) {
-                clanText.add(textSerializer("&l&6-&r&a" + user.getName()));
+                clanText.add(textSerializer("&7-&r&3" + user.getName()));
             }
             paginationBuilder(clanText, p);
         }
@@ -246,10 +246,10 @@ public class Util {
             Boolean choice = BClanChat.chatToggle.get(p.getUniqueId());
             Boolean invert = invertBoolean(choice);
             BClanChat.chatToggle.replace(p.getUniqueId(), invert);
-            p.sendMessage(prefixSerializer("&bYou have toggle clan chat to: &l&6" + invert));
+            p.sendMessage(prefixSerializer("&bYou have toggled group chat to: &3" + invert));
         } else {
             BClanChat.chatToggle.put(p.getUniqueId(), true);
-            p.sendMessage(prefixSerializer("&bYou have toggle clan chat to: &l&6" + true));
+            p.sendMessage(prefixSerializer("&bYou have toggled group chat to: &3" + true));
         }
     }
 
@@ -291,7 +291,7 @@ public class Util {
     public void deleteClan(Clan clan) throws IOException, ObjectMappingException {
         for(UUID uuid : clan.getPlayerList()){
             if(getOnlinePlayer(uuid).isPresent()){
-                getOnlinePlayer(uuid).get().sendMessage(prefixSerializer("&bThe clan you were in (" + clan.getClanID() + ") has been deleted."));
+                getOnlinePlayer(uuid).get().sendMessage(prefixSerializer("&bThe group you were in (&3" + clan.getClanID() + "&b) has been deleted."));
             }
         }
         BClanChat.clanList.remove(clan);
@@ -308,7 +308,7 @@ public class Util {
             if (clan.getClanID().equals(clanID)) {
                 for(UUID uuid : clan.getPlayerList()){
                     if(getOnlinePlayer(uuid).isPresent()){
-                        getOnlinePlayer(uuid).get().sendMessage(prefixSerializer("&bThe clan you were in (" + clanID + ") has been deleted."));
+                        getOnlinePlayer(uuid).get().sendMessage(prefixSerializer("&bThe group you were in (&3" + clanID + "&b) has been deleted."));
                     }
                 }
                 BClanChat.clanList.remove(clan);

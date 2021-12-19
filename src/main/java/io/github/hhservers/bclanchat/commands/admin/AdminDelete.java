@@ -18,9 +18,9 @@ public class AdminDelete implements CommandExecutor {
     public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
         if(args.<String>getOne(Text.of("clanID")).isPresent()){
             if(BClanChat.getInstance().util.deleteClan(args.<String>getOne(Text.of("clanID")).get()))
-                src.sendMessage(BClanChat.getInstance().util.prefixSerializer("&bClan deleted."));
+                src.sendMessage(BClanChat.getInstance().util.prefixSerializer("&bGroup deleted."));
             else
-                src.sendMessage(BClanChat.getInstance().util.prefixSerializer("&bError removing Clan"));
+                src.sendMessage(BClanChat.getInstance().util.prefixSerializer("&bError removing group"));
         }
         return CommandResult.success();
     }
@@ -29,7 +29,7 @@ public class AdminDelete implements CommandExecutor {
         return CommandSpec.builder()
                 .arguments(GenericArguments.string(Text.of("clanID")))
                 .permission("bclanchat.admin.clan.delete")
-                .description(Text.of("Delete Clan"))
+                .description(Text.of("Delete group"))
                 .executor(new AdminDelete())
                 .build();
     }

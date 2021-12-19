@@ -22,10 +22,10 @@ public class AdminHelp implements CommandExecutor {
             Util util = BClanChat.getInstance().util;
             List<Text> txt = new ArrayList<>();
             String prefix = BClanChat.getMainPluginConfig().getAdminCommandPrefix();
-            txt.add(util.textSerializer("&l&6-&d/" + prefix + " details &a-&b Details of all clans currently registered"));
-            txt.add(util.textSerializer("&l&6-&d/" + prefix + " add &a-&b Add user to a clan (takes clanID)"));
-            txt.add(util.textSerializer("&l&6-&d/" + prefix + " remove &a-&b Remove user from a clan (takes clanID)"));
-            txt.add(util.textSerializer("&l&6-&d/" + prefix + " get &a-&b Get a player's current clan (takes username)"));
+            txt.add(util.textSerializer("&l&6-&d/" + prefix + " details &a-&b Details of all groups currently registered"));
+            txt.add(util.textSerializer("&l&6-&d/" + prefix + " add &a-&b Add user to a group (takes groupID)"));
+            txt.add(util.textSerializer("&l&6-&d/" + prefix + " remove &a-&b Remove user from a group (takes groupID)"));
+            txt.add(util.textSerializer("&l&6-&d/" + prefix + " get &a-&b Get a player's current group (takes username)"));
             txt.add(util.textSerializer("&l&6-&d/" + prefix + " delete &a-&b Delete a clan (takes clanID)"));
             util.paginationBuilder(txt, src);
         }
@@ -35,7 +35,7 @@ public class AdminHelp implements CommandExecutor {
     public static CommandSpec build(){
        return CommandSpec.builder()
                 .permission("bclanchat.admin.clan.help")
-                .description(Text.of("Clan help"))
+                .description(Text.of("Group help"))
                 .executor(new AdminHelp())
                 .build();
     }

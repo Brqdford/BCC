@@ -23,7 +23,7 @@ public class Remove implements CommandExecutor {
             if(util.getClanByOwner(p.getUniqueId()).isPresent()) {
                 if (args.<User>getOne(Text.of("usernameToRemove")).isPresent()) {
                     User u = args.<User>getOne(Text.of("usernameToRemove")).get();
-                    if(util.removeUserFromClan(u, p.getUniqueId())){ p.sendMessage(util.prefixSerializer("&bUser was removed from the Clan"));}
+                    if(util.removeUserFromClan(u, p.getUniqueId())){ p.sendMessage(util.prefixSerializer("&bUser was removed from the group"));}
                     else {p.sendMessage(Text.of("false wat da fuck"));}
                 }
             }
@@ -35,7 +35,7 @@ public class Remove implements CommandExecutor {
        return CommandSpec.builder()
                 .arguments(GenericArguments.user(Text.of("usernameToRemove")))
                 .permission("bclanchat.user.clan.remove")
-                .description(Text.of("Remove player from Clan"))
+                .description(Text.of("Remove player from group"))
                 .executor(new Remove())
                 .build();
     }
