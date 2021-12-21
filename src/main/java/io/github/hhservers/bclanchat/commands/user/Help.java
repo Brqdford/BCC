@@ -25,6 +25,7 @@ public class Help implements CommandExecutor {
             Util util = BClanChat.getInstance().util;
             List<Text> txt = new ArrayList<>();
             String prefix = BClanChat.getMainPluginConfig().getCommandPrefix();
+            txt.add(util.textSerializer("&3grp!<message> &7-&b Sends Message to Group Chat"));
             txt.add(util.textSerializer("&3/" + prefix + " &7-&b Toggle Group Chat"));
             txt.add(util.textSerializer("&3/" + prefix + " create &7-&b Create a group"));
             txt.add(util.textSerializer("&3/" + prefix + " details &7-&b Current group details"));

@@ -30,6 +30,7 @@ import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.scheduler.Task;
 import org.spongepowered.api.scoreboard.Team;
 import org.spongepowered.api.scoreboard.TeamMember;
+import org.spongepowered.api.service.permission.SubjectData;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.serializer.TextSerializers;
 
@@ -132,10 +133,22 @@ public class BClanChat {
                     Clan playerClan = util.getPlayerClan(p.getUniqueId()).get();
                     for (UUID uuid : playerClan.getPlayerList()) {
                         if (Sponge.getServer().getPlayer(uuid).isPresent()) {
-                            String msg = TextSerializers.FORMATTING_CODE.serialize(e.getRawMessage());
-                            e.setCancelled(true);
-                            Sponge.getServer().getPlayer(uuid).get().sendMessage(TextSerializers.FORMATTING_CODE.deserialize("&8[&9" + playerClan.getClanID() + "&8]&r &f" + team.get().getPrefix().toPlain().replace("[", "§f[§3").replace("]", "§f] ") + p.getName() + ": " + msg.replace("grp!", "")));
-                            Sponge.getServer().getConsole().sendMessage(Text.of(p.getName(), ": ", msg));
+                            if (p.hasPermission(SubjectData.GLOBAL_CONTEXT, "tabmanager.group.pink")) {
+                                String msg = TextSerializers.FORMATTING_CODE.serialize(e.getRawMessage());
+                                e.setCancelled(true);
+                                Sponge.getServer().getPlayer(uuid).get().sendMessage(TextSerializers.FORMATTING_CODE.deserialize("&8[&9" + playerClan.getClanID() + "&8]&r &f" + team.get().getPrefix().toPlain().replace("[", "§f[§3").replace("]", "§f] §d") + p.getName() + "§f: " + msg.replace("grp!", "")));
+                                Sponge.getServer().getConsole().sendMessage(TextSerializers.FORMATTING_CODE.deserialize("&8[&9" + playerClan.getClanID() + "&8]&r &f" + team.get().getPrefix().toPlain().replace("[", "§f[§3").replace("]", "§f] §d") + p.getName() + "§f: " + msg));
+                            } else if (p.hasPermission(SubjectData.GLOBAL_CONTEXT, "tabmanager.group.blue")) {
+                                String msg = TextSerializers.FORMATTING_CODE.serialize(e.getRawMessage());
+                                e.setCancelled(true);
+                                Sponge.getServer().getPlayer(uuid).get().sendMessage(TextSerializers.FORMATTING_CODE.deserialize("&8[&9" + playerClan.getClanID() + "&8]&r &f" + team.get().getPrefix().toPlain().replace("[", "§f[§3").replace("]", "§f] §b") + p.getName() + "§f: " + msg.replace("grp!", "")));
+                                Sponge.getServer().getConsole().sendMessage(TextSerializers.FORMATTING_CODE.deserialize("&8[&9" + playerClan.getClanID() + "&8]&r &f" + team.get().getPrefix().toPlain().replace("[", "§f[§3").replace("]", "§f] §b") + p.getName() + "§f: " + msg));
+                            } else {
+                                String msg = TextSerializers.FORMATTING_CODE.serialize(e.getRawMessage());
+                                e.setCancelled(true);
+                                Sponge.getServer().getPlayer(uuid).get().sendMessage(TextSerializers.FORMATTING_CODE.deserialize("&8[&9" + playerClan.getClanID() + "&8]&r &f" + team.get().getPrefix().toPlain().replace("[", "§f[§3").replace("]", "§f] ") + p.getName() + ": " + msg.replace("grp!", "")));
+                                Sponge.getServer().getConsole().sendMessage(TextSerializers.FORMATTING_CODE.deserialize("&8[&9" + playerClan.getClanID() + "&8]&r &f" + team.get().getPrefix().toPlain().replace("[", "§f[§3").replace("]", "§f] ") + p.getName() + ": " + msg));
+                            }
                         }
                     }
                 } else {
@@ -154,10 +167,22 @@ public class BClanChat {
                         Clan playerClan = util.getPlayerClan(p.getUniqueId()).get();
                         for (UUID uuid : playerClan.getPlayerList()) {
                             if (Sponge.getServer().getPlayer(uuid).isPresent()) {
-                                String msg = TextSerializers.FORMATTING_CODE.serialize(e.getRawMessage());
-                                e.setCancelled(true);
-                                Sponge.getServer().getPlayer(uuid).get().sendMessage(TextSerializers.FORMATTING_CODE.deserialize("&8[&9" + playerClan.getClanID() + "&8]&r &f" + team.get().getPrefix().toPlain().replace("[", "§f[§3").replace("]", "§f] ") + p.getName() + ": " + msg.replace("grp!", "")));
-                                Sponge.getServer().getConsole().sendMessage(Text.of(p.getName(), ": ", msg));
+                                if (p.hasPermission(SubjectData.GLOBAL_CONTEXT, "tabmanager.group.pink")) {
+                                    String msg = TextSerializers.FORMATTING_CODE.serialize(e.getRawMessage());
+                                    e.setCancelled(true);
+                                    Sponge.getServer().getPlayer(uuid).get().sendMessage(TextSerializers.FORMATTING_CODE.deserialize("&8[&9" + playerClan.getClanID() + "&8]&r &f" + team.get().getPrefix().toPlain().replace("[", "§f[§3").replace("]", "§f] §d") + p.getName() + "§f: " + msg.replace("grp!", "")));
+                                    Sponge.getServer().getConsole().sendMessage(TextSerializers.FORMATTING_CODE.deserialize("&8[&9" + playerClan.getClanID() + "&8]&r &f" + team.get().getPrefix().toPlain().replace("[", "§f[§3").replace("]", "§f] §d") + p.getName() + "§f: " + msg));
+                                } else if (p.hasPermission(SubjectData.GLOBAL_CONTEXT, "tabmanager.group.blue")) {
+                                    String msg = TextSerializers.FORMATTING_CODE.serialize(e.getRawMessage());
+                                    e.setCancelled(true);
+                                    Sponge.getServer().getPlayer(uuid).get().sendMessage(TextSerializers.FORMATTING_CODE.deserialize("&8[&9" + playerClan.getClanID() + "&8]&r &f" + team.get().getPrefix().toPlain().replace("[", "§f[§3").replace("]", "§f] §b") + p.getName() + "§f: " + msg.replace("grp!", "")));
+                                    Sponge.getServer().getConsole().sendMessage(TextSerializers.FORMATTING_CODE.deserialize("&8[&9" + playerClan.getClanID() + "&8]&r &f" + team.get().getPrefix().toPlain().replace("[", "§f[§3").replace("]", "§f] §b") + p.getName() + "§f: " + msg));
+                                } else {
+                                    String msg = TextSerializers.FORMATTING_CODE.serialize(e.getRawMessage());
+                                    e.setCancelled(true);
+                                    Sponge.getServer().getPlayer(uuid).get().sendMessage(TextSerializers.FORMATTING_CODE.deserialize("&8[&9" + playerClan.getClanID() + "&8]&r &f" + team.get().getPrefix().toPlain().replace("[", "§f[§3").replace("]", "§f] ") + p.getName() + ": " + msg.replace("grp!", "")));
+                                    Sponge.getServer().getConsole().sendMessage(TextSerializers.FORMATTING_CODE.deserialize("&8[&9" + playerClan.getClanID() + "&8]&r &f" + team.get().getPrefix().toPlain().replace("[", "§f[§3").replace("]", "§f] ") + p.getName() + ": " + msg));
+                                }
                             }
                         }
                     }
@@ -165,10 +190,22 @@ public class BClanChat {
                     Clan playerClan = util.getPlayerClan(p.getUniqueId()).get();
                     for (UUID uuid : playerClan.getPlayerList()) {
                         if (Sponge.getServer().getPlayer(uuid).isPresent()) {
-                            String msg = TextSerializers.FORMATTING_CODE.serialize(e.getRawMessage());
-                            e.setCancelled(true);
-                            Sponge.getServer().getPlayer(uuid).get().sendMessage(TextSerializers.FORMATTING_CODE.deserialize("&8[&9" + playerClan.getClanID() + "&8]&r &f" + team.get().getPrefix().toPlain().replace("[", "§f[§3").replace("]", "§f] ") + p.getName() + ": " + msg.replace("grp!", "")));
-                            Sponge.getServer().getConsole().sendMessage(Text.of(p.getName(), ": ", msg));
+                            if (p.hasPermission(SubjectData.GLOBAL_CONTEXT, "tabmanager.group.pink")) {
+                                String msg = TextSerializers.FORMATTING_CODE.serialize(e.getRawMessage());
+                                e.setCancelled(true);
+                                Sponge.getServer().getPlayer(uuid).get().sendMessage(TextSerializers.FORMATTING_CODE.deserialize("&8[&9" + playerClan.getClanID() + "&8]&r &f" + team.get().getPrefix().toPlain().replace("[", "§f[§3").replace("]", "§f] §d") + p.getName() + "§f: " + msg.replace("grp!", "")));
+                                Sponge.getServer().getConsole().sendMessage(TextSerializers.FORMATTING_CODE.deserialize("&8[&9" + playerClan.getClanID() + "&8]&r &f" + team.get().getPrefix().toPlain().replace("[", "§f[§3").replace("]", "§f] §d") + p.getName() + "§f: " + msg));
+                            } else if (p.hasPermission(SubjectData.GLOBAL_CONTEXT, "tabmanager.group.blue")) {
+                                String msg = TextSerializers.FORMATTING_CODE.serialize(e.getRawMessage());
+                                e.setCancelled(true);
+                                Sponge.getServer().getPlayer(uuid).get().sendMessage(TextSerializers.FORMATTING_CODE.deserialize("&8[&9" + playerClan.getClanID() + "&8]&r &f" + team.get().getPrefix().toPlain().replace("[", "§f[§3").replace("]", "§f] §b") + p.getName() + "§f: " + msg.replace("grp!", "")));
+                                Sponge.getServer().getConsole().sendMessage(TextSerializers.FORMATTING_CODE.deserialize("&8[&9" + playerClan.getClanID() + "&8]&r &f" + team.get().getPrefix().toPlain().replace("[", "§f[§3").replace("]", "§f] §b") + p.getName() + "§f: " + msg));
+                            } else {
+                                String msg = TextSerializers.FORMATTING_CODE.serialize(e.getRawMessage());
+                                e.setCancelled(true);
+                                Sponge.getServer().getPlayer(uuid).get().sendMessage(TextSerializers.FORMATTING_CODE.deserialize("&8[&9" + playerClan.getClanID() + "&8]&r &f" + team.get().getPrefix().toPlain().replace("[", "§f[§3").replace("]", "§f] ") + p.getName() + ": " + msg.replace("grp!", "")));
+                                Sponge.getServer().getConsole().sendMessage(TextSerializers.FORMATTING_CODE.deserialize("&8[&9" + playerClan.getClanID() + "&8]&r &f" + team.get().getPrefix().toPlain().replace("[", "§f[§3").replace("]", "§f] ") + p.getName() + ": " + msg));
+                            }
                         }
                     }
                 }

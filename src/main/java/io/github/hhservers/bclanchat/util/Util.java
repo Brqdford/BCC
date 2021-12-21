@@ -89,6 +89,7 @@ public class Util {
             Player send = sender.getPlayer().get();
 
             rec.sendMessage(prefixSerializer("&bYou have received a group request from &3" + sender.getName() + "&b."));
+            rec.sendMessage(prefixSerializer("&bClick on the text to accept or deny."));
 
             rec.sendMessage(Text.builder()
 
